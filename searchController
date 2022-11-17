@@ -1,0 +1,157 @@
+package TryFX;
+
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import java.sql.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+public class searchController {
+
+    @FXML
+    private TextField input;
+    
+    @FXML
+    private Text id;
+
+    @FXML
+    private Text name;    
+    
+    @FXML
+    private Text salary;
+    
+    @FXML
+    private Label error;
+
+    @FXML
+    private Label found;
+    
+    @FXML
+    void resultChange(ActionEvent event) throws SQLException{
+        Connection myConnect = null;
+        PreparedStatement myStat = null;
+        ResultSet rslt = null;
+        
+         try{
+             // 1. Get connection to database
+             myConnect = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Employees;encrypt=true;trustServerCertificate=true;", "sa", "123");
+
+             // 2. Prepare statement
+             myStat = myConnect.prepareStatement("select * from employees where name = ?");
+
+             // 3. Set the parameter
+             String a = input.getText();
+             System.out.println("Input is " + a);
+             myStat.setString(1, input.getText());
+             // 1 is the sequence of ? in prepared statement, a is the value to replace ? 
+
+
+             // 4. Execute SQL query
+             rslt = myStat.executeQuery();
+             
+             // 5. Display the result
+             
+             boolean chk = true;
+             while (rslt.next()) {
+                 if(a.equals(rslt.getString("name"))){
+                     name.setText(rslt.getString("name"));
+                     // setText is to set the text to display in JavaFX
+                     // "name" is the variable name in database table
+                     
+                     id.setText(Integer.toString(rslt.getInt("id")));
+                     salary.setText(Double.toString(rslt.getDouble("salary")));
+                     found.setVisible(true);
+                     error.setVisible(false);
+                     chk = false;
+                 } 
+             }
+             
+             if(chk){
+                     System.out.println("none");
+                     name.setText("N/A");
+                     id.setText("N/A");
+                     salary.setText("N/A");
+                     error.setVisible(true);
+                     found.setVisible(false);
+                 }
+             
+            
+         }
+         
+         catch (Exception exc) {
+            exc.printStackTrace();
+        } 
+         
+         finally {
+            if (rslt != null) {
+                rslt.close();
+            }
+
+            if (myStat != null) {
+                myStat.close();
+            }
+
+            if (myConnect != null) {
+                myConnect.close();
+            }
+
+        }
+    }
+
+
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    
+    public void switchToHome(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("home.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    
+    public void switchToAdd(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("addEmp.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    /*
+    public void switchToUpdate(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("update.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void switchToDelete(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("delete.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+*/
+    public void switchToSearch(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("search.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+}
