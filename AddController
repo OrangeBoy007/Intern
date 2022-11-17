@@ -1,0 +1,111 @@
+package TryFX;
+
+import java.io.IOException;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import java.sql.*;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
+
+public class AddController {
+
+    @FXML
+    private TextField inputName;
+
+    @FXML
+    private TextField inputSalary;
+
+    @FXML
+    private Label successMsg;
+    
+    @FXML
+    void AddEmp(ActionEvent event) {
+        try{
+            Connection myConnect = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Employees;encrypt=true;trustServerCertificate=true;", "sa", "123");
+            PreparedStatement myStat = myConnect.prepareStatement("insert into employees(name, salary) values(?, ?)");
+            
+            Double salary = Double.parseDouble(inputSalary.getText());
+            
+            System.out.println(salary);
+            myStat.setString(1, inputName.getText());
+            myStat.setDouble(2, salary);
+            
+            myStat.executeUpdate();
+            successMsg.setVisible(true);
+            System.out.println("insert ok");
+            
+            
+            
+            
+        }
+        
+        catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
+    
+    public void switchToSearch(ActionEvent event) throws IOException{
+        root = FXMLLoader.load(getClass().getResource("search.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    
+    /*
+    public void switchToAdd(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("add.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void switchToUpdate(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("update.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    public void switchToDelete(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("delete.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+     */
+    
+    public void switchToHome(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("home.fxml"));
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    
+    
+    
+}
