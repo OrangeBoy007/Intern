@@ -1,0 +1,48 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package TryFX;
+
+import java.sql.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javax.swing.JOptionPane;
+import javafx.scene.control.cell.PropertyValueFactory;
+
+public class sqlConnect {
+    Connection conn = null;
+    
+    public static Connection connectDb(){
+        try{
+            Connection conn = DriverManager.getConnection("jdbc:sqlserver://localhost:1433;databaseName=Employees;encrypt=true;trustServerCertificate=true;", "sa", "123");
+            return conn;
+            
+        }
+        
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+            return null;
+        }
+    }
+    
+    
+    public static ObservableList<employees> getEmp(){
+        
+        Connection myConnect = connectDb();
+        ObservableList<employees> list = FXCollections.observableArrayList();
+        try{
+            PreparedStatement ps = myConnect.prepareStatement("select * from employees");
+            ResultSet rs = ps.executeQuery();
+            
+            while(rs.next()){
+                list.add(new employees(rs.getString("name"),rs.getInt("id"),rs.getDouble("salary")));
+            }
+        }
+        
+        catch(Exception e){
+        }
+          
+        return list;
+    }
+}
