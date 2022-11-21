@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javax.swing.JOptionPane;
 
 public class searchController {
 
@@ -129,24 +130,26 @@ public class searchController {
         stage.show();
     }
     
-    /*
     public void switchToUpdate(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("update.fxml"));
+        root = FXMLLoader.load(getClass().getResource("updateEmp.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        JOptionPane.showMessageDialog(null, "Connection Successful");
         stage.show();
     }
     
+
     public void switchToDelete(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("delete.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        JOptionPane.showMessageDialog(null, "Connection Successful");
         stage.show();
     }
     
-*/
+
     public void switchToSearch(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("search.fxml"));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
