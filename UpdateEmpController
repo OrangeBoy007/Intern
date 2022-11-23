@@ -49,6 +49,8 @@ public class UpdateEmpController implements Initializable {
     ResultSet rs = null;
     PreparedStatement pst = null;
     
+    String oldName;
+    
     @FXML
     void getSelected(MouseEvent event){
         index = table_emp.getSelectionModel().getSelectedIndex();
@@ -57,6 +59,7 @@ public class UpdateEmpController implements Initializable {
             return;
         }
         
+        oldName = col_name.getCellData(index).toString();
         txt_name.setText(col_name.getCellData(index).toString());
         txt_salary.setText(col_salary.getCellData(index).toString());
     }
@@ -67,7 +70,7 @@ public class UpdateEmpController implements Initializable {
             String value1 = txt_name.getText();
             String value2 = txt_salary.getText();
             
-            String sql = "update employees set name = '" + value1 +"', salary = '" + value2 + "' where name = '" + value1 +"'  ";
+            String sql = "update employees set name = '" + value1 +"', salary = '" + value2 + "' where name = '" + oldName +"'  ";
             pst = conn.prepareStatement(sql);
             pst.execute();
             
