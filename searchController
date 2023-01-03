@@ -1,100 +1,789 @@
-package TryFX;
+package intern.app.intern;
 
-import java.io.IOException;
-import java.net.URL;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
-import java.sql.*;
-import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javax.swing.JOptionPane;
 
-public class searchController implements Initializable{
+import javax.swing.*;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ResourceBundle;
+
+public class searchController implements Initializable {
 
     @FXML
-    private TextField input;
+    private TableColumn<salesTable, String> col_address;
+
+    @FXML
+    private TableColumn<salesTable, String> col_city;
+
+    @FXML
+    private TableColumn<salesTable, String> col_configID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_countryRegionID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_createdDateTime1;
+
+    @FXML
+    private TableColumn<salesTable, String> col_custAccount;
+
+    @FXML
+    private TableColumn<salesTable, String> col_custGroup;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dataAreaID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dataAreaID1;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dataAreaID2;
+
+    @FXML
+    private TableColumn<salesTable, String> col_defaultDimension;
+
+    @FXML
+    private TableColumn<salesTable, String> col_deliveryDate;
+
+    @FXML
+    private TableColumn<salesTable, String> col_deliveryPostalAddress;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimension;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimension2_;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimension3_;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimension4_;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimension5_;
+
+    @FXML
+    private TableColumn<salesTable, String> col_inventBatchID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_dimid;
+
+    @FXML
+    private TableColumn<salesTable, String> col_inventLocationID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_itemID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_location;
+
+    @FXML
+    private TableColumn<salesTable, String> col_contactPerson1;
+
+    @FXML
+    private TableColumn<salesTable, String> col_mbp_contactPerson2;
+
+    @FXML
+    private TableColumn<salesTable, String> col_mbp_internalSono;
+
+    @FXML
+    private TableColumn<salesTable, String> col_mbp_phone1;
+
+    @FXML
+    private TableColumn<salesTable, String> col_mbp_phone2;
+
+    @FXML
+    private TableColumn<salesTable, String> col_orderAccount;
+
+    @FXML
+    private TableColumn<salesTable, String> col_origSalesID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_packingSlipID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_partition;
+
+    @FXML
+    private TableColumn<salesTable, String> col_partition2;
+
+    @FXML
+    private TableColumn<salesTable, String> col_purchOrderFormNum;
+
+    @FXML
+    private TableColumn<salesTable, Double> col_qty;
+
+    @FXML
+    private TableColumn<salesTable, String> col_recID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_salesGroup;
+
+    @FXML
+    private TableColumn<salesTable, String> col_salesID;
+
+    @FXML
+    private TableColumn<salesTable, String> col_salesID1;
+
+    @FXML
+    private TableColumn<salesTable, String> col_salesName;
+
+    @FXML
+    private TableColumn<salesTable, Integer> col_salesType;
+
+    @FXML
+    private TableColumn<salesTable, String> col_salesUnit;
+
+    @FXML
+    private TableColumn<salesTable, String> col_state;
+
+    @FXML
+    private TableColumn<salesTable, String> col_street;
+
+    @FXML
+    private TableColumn<salesTable, String> col_transRecID;
+
+    @FXML
+    private TableColumn<salesTable, Double> col_valueMST;
+
+    @FXML
+    private TableColumn<salesTable, String> col_zipcode;
+
+
+    @FXML
+    private DatePicker endDate;
+
+    @FXML
+    private DatePicker startDate;
+
+
+    @FXML
+    private Spinner<Integer> hour1;
+
+    @FXML
+    private Spinner<Integer> hour2;
+
+    @FXML
+    private Spinner<Integer> minute1;
+
+    @FXML
+    private Spinner<Integer> minute2;
+
+    @FXML
+    private Label records;
+
+    @FXML
+    private TableView<salesTable> table_sales;
     
-    @FXML
-    private TableColumn<employees, String> col_name;
+    ObservableList<salesTable> listM;
 
-    @FXML
-    private TableColumn<employees, Integer> col_id;
 
-    @FXML
-    private TableColumn<employees, Double> col_salary;
-
-    @FXML
-    private TableView<employees> table_emp;
-    
-    ObservableList<employees> listM;
-
+//-----------------variables to store for sql connection and getselected function--------------------
+    int index = -1;
     Connection conn = null;
     ResultSet rs = null;
     PreparedStatement pst = null;
-    
-    
+
+
+//-------------variables to store the time selected-------------------------
+    int hr_1 = 0, min_1 = 0;
+    String time1 = null, time2 = null;
+
+    int hr_2 = 0, min_2 = 0;
+
+
+    //--------------------------------------------------------beginning of coding-----------------------------------------------------------
+    @FXML
+    void getSelected(MouseEvent event) {
+        index = table_sales.getSelectionModel().getSelectedIndex();
+        if (index <= -1) {
+
+            return;
+        }
+
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        //----------------------initialize the hour unit with 0 to 24-------------------------
+        SpinnerValueFactory<Integer> hour = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+        hour.setValue(0);
+        hour1.setValueFactory(hour);
+
+        SpinnerValueFactory<Integer> hour_2n = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23);
+        hour_2n.setValue(0);
+        hour2.setValueFactory(hour_2n);
+
+        //-------------------initialize the minute unit with 0 to 60---------------------------
+        SpinnerValueFactory<Integer> minute = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        minute.setValue(0);
+        minute1.setValueFactory(minute);
+
+        SpinnerValueFactory<Integer> minute_2n = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59);
+        minute_2n.setValue(0);
+        minute2.setValueFactory(minute_2n);
+
+
+        //--------to always update the latest changes of each hour and minute unit of both spinner-------------
+        //----------------------------the first spinner of time---------------------------
+        hour1.valueProperty().addListener(new ChangeListener<Integer>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
+
+                hr_1 = hour1.getValue();
+            }
+        });
+
+
+        minute1.valueProperty().addListener(new ChangeListener<Integer>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
+
+                min_1 = minute1.getValue();
+            }
+        });
+
+        //------------------------the second spinner of time-----------------------------
+        hour2.valueProperty().addListener(new ChangeListener<Integer>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
+
+                hr_2 = hour2.getValue();
+            }
+        });
+
+
+        minute2.valueProperty().addListener(new ChangeListener<Integer>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Integer> arg0, Integer arg1, Integer arg2) {
+
+                min_2 = minute2.getValue();
+            }
+        });
+
+    }
+
+
+
     public void search() {
         try {
             conn = sqlConnect.connectDb();
-            ObservableList<employees> list = FXCollections.observableArrayList();
+            ObservableList<salesTable> list = FXCollections.observableArrayList();
 
-            
-            String sql = "select * from employees where name like ? ";
-            pst = conn.prepareStatement(sql);
-            pst.setString(1, input.getText() + "%");
+
+            String sql1 = "select * from APEX_APPDATA where deliverydate >= ? and deliverydate <= ?";
+
+            pst = conn.prepareStatement(sql1);
+
+            time1 = hr_1 + ":" + min_1;
+            time2 = hr_2 + ":" + min_2;
+
+            pst.setString(1, startDate.getValue().toString() + " " + time1);
+            pst.setString(2,endDate.getValue().toString() + " " + time2);
+
             pst.execute();
 
             rs = pst.executeQuery();
             
             while(rs.next()){
-                list.add(new employees(rs.getString("name"), rs.getInt("id"), rs.getDouble("salary")));
-                System.out.println(rs.getString("name"));
+                salesTable table = new salesTable();
+
+                table.setDimension(rs.getString("dimension"));
+                table.setDimension2_(rs.getString("dimension2_"));
+                table.setDimension3_(rs.getString("dimension3_"));
+                table.setDimension4_(rs.getString("dimension4_"));
+                table.setDimension5_(rs.getString("dimension5_"));
+                table.setAddress(rs.getString("address").replaceAll("\n", " "));
+                table.setCity(rs.getString("city"));
+                table.setCountryRegionID(rs.getString("countryRegionID"));
+                table.setCreatedDateTime1(rs.getString("createdDateTime1"));
+                table.setCustAccount(rs.getString("custAccount"));
+                table.setCustGroup(rs.getString("custGroup"));
+                table.setDataAreaID1(rs.getString("dataAreaID1"));
+                table.setDefaultDimension(rs.getString("defaultDimension"));
+                table.setDeliveryPostalAddress(rs.getString("deliveryPostalAddress"));
+                table.setLocation(rs.getString("location"));
+                table.setMbp_contactPerson1(rs.getString("mbp_contactPerson1"));
+                table.setMbp_contactPerson2(rs.getString("mbp_contactPerson2"));
+                table.setMbp_internalSono(rs.getString("mbp_internalSono"));
+                table.setMbp_phone1(rs.getString("mbp_phone1"));
+                table.setMbp_phone2(rs.getString("mbp_phone2"));
+                table.setPurchOrderFormNum(rs.getString("purchOrderFormNum"));
+                table.setSalesGroup(rs.getString("salesGroup"));
+                table.setSalesID(rs.getString("salesID"));
+                table.setSalesName(rs.getString("salesName"));
+                table.setSalesType(rs.getInt("salesType"));
+                table.setState(rs.getString("state"));
+                table.setStreet(rs.getString("street").replaceAll("\n", " "));
+                table.setZipcode(rs.getString("zipcode"));
+                table.setDataAreaID(rs.getString("dataAreaID"));
+                table.setPartition(rs.getString("partition"));
+                table.setRecID(rs.getString("recID"));
+                table.setDataAreaID2(rs.getString("dataAreaID#2"));
+                table.setPartition2(rs.getString("partition#2"));
+                table.setConfigID(rs.getString("configID"));
+                table.setDeliveryDate(rs.getString("deliveryDate"));
+                table.setInventBatchID(rs.getString("inventBatchID"));
+                table.setInventdimid(rs.getString("inventDIMID"));
+                table.setInventLocationID(rs.getString("inventLocationID"));
+                table.setItemID(rs.getString("itemID"));
+                table.setOrderAccount(rs.getString("orderAccount"));
+                table.setOrigSalesID(rs.getString("origSalesID"));
+                table.setPackingSlipID(rs.getString("packingSLipID"));
+                table.setQty(rs.getDouble("qty"));
+                table.setSalesID1(rs.getString("salesID1"));
+                table.setSalesUnit(rs.getString("salesUnit"));
+                table.setTransRecID(rs.getString("transRecID"));
+                table.setValueMST(rs.getDouble("valueMST"));
+
+                list.add(table);
+
+
             }
-            
-            col_name.setCellValueFactory(new PropertyValueFactory<employees, String>("name"));
-            col_id.setCellValueFactory(new PropertyValueFactory<employees, Integer>("id"));
-            col_salary.setCellValueFactory(new PropertyValueFactory<employees, Double>("salary"));
+
+            String sql2 = "select count(*) as ttl from APEX_APPDATA where deliverydate >= ? and deliverydate <= ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql2);
+
+            preparedStatement.setString(1, startDate.getValue().toString() + " " + time1);
+            preparedStatement.setString(2,endDate.getValue().toString() + " " + time2);
+            preparedStatement.execute();
+
+            ResultSet result = preparedStatement.executeQuery();
+            int record = 0;
+            while(result.next()){
+                record = result.getInt("ttl");
+            }
+
+            records.setText(String.valueOf(record));
+
+
+            col_dimension.setCellValueFactory(new PropertyValueFactory<>("Dimension"));
+            col_dimension2_.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Dimension2_"));
+            col_dimension3_.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Dimension3_"));
+            col_dimension4_.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Dimension4_"));
+            col_dimension5_.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Dimension5_"));
+            col_address.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Address"));
+            col_city.setCellValueFactory(new PropertyValueFactory<salesTable, String>("City"));
+            col_countryRegionID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("CountryRegionID"));
+            col_createdDateTime1.setCellValueFactory(new PropertyValueFactory<salesTable, String>("CreatedDateTime1"));
+            col_custAccount.setCellValueFactory(new PropertyValueFactory<salesTable, String>("CustAccount"));
+            col_custGroup.setCellValueFactory(new PropertyValueFactory<salesTable, String>("CustGroup"));
+            col_dataAreaID1.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DataAreaID1"));
+            col_defaultDimension.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DefaultDimension"));
+            col_deliveryPostalAddress.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DeliveryPostalAddress"));
+            col_location.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Location"));
+            col_contactPerson1.setCellValueFactory(new PropertyValueFactory<>("mbp_contactPerson1"));
+            col_mbp_contactPerson2.setCellValueFactory(new PropertyValueFactory<>("mbp_contactPerson2"));
+            col_mbp_internalSono.setCellValueFactory(new PropertyValueFactory<>("mbp_internalSono"));
+            col_mbp_phone1.setCellValueFactory(new PropertyValueFactory<>("mbp_phone1"));
+            col_mbp_phone2.setCellValueFactory(new PropertyValueFactory<>("mbp_phone2"));
+            col_purchOrderFormNum.setCellValueFactory(new PropertyValueFactory<salesTable, String>("purchOrderFormNum"));
+            col_salesGroup.setCellValueFactory(new PropertyValueFactory<salesTable, String>("SalesGroup"));
+            col_salesID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("SalesID"));
+            col_salesName.setCellValueFactory(new PropertyValueFactory<salesTable, String>("SalesName"));
+            col_salesType.setCellValueFactory(new PropertyValueFactory<salesTable, Integer>("SalesType"));
+            col_state.setCellValueFactory(new PropertyValueFactory<salesTable, String>("State"));
+            col_street.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Street"));
+            col_zipcode.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Zipcode"));
+            col_dataAreaID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DataAreaID"));
+            col_partition.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Partition"));
+            col_recID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("RecID"));
+            col_dataAreaID2.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DataAreaID2"));
+            col_partition2.setCellValueFactory(new PropertyValueFactory<salesTable, String>("Partition2"));
+            col_configID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("ConfigID"));
+            col_deliveryDate.setCellValueFactory(new PropertyValueFactory<salesTable, String>("DeliveryDate"));
+            col_inventBatchID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("inventBatchID"));
+            col_dimid.setCellValueFactory(new PropertyValueFactory<>("inventdimid"));
+            col_inventLocationID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("InventLocationID"));
+            col_itemID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("ItemID"));
+            col_orderAccount.setCellValueFactory(new PropertyValueFactory<salesTable, String>("OrderAccount"));
+            col_packingSlipID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("PackingSlipID"));
+            col_qty.setCellValueFactory(new PropertyValueFactory<salesTable, Double>("Qty"));
+            col_salesID1.setCellValueFactory(new PropertyValueFactory<salesTable, String>("SalesID1"));
+            col_salesUnit.setCellValueFactory(new PropertyValueFactory<salesTable, String>("SalesUnit"));
+            col_origSalesID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("OrigSalesID"));
+            col_transRecID.setCellValueFactory(new PropertyValueFactory<salesTable, String>("TransRecID"));
+            col_valueMST.setCellValueFactory(new PropertyValueFactory<salesTable, Double>("ValueMST"));
 
             listM = list;
-            table_emp.setItems(listM);
-            
+            table_sales.setItems(listM);
+
+
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
     }
 
-    public void refreshTable() {
 
-        col_name.setCellValueFactory(new PropertyValueFactory<employees, String>("name"));
-        col_id.setCellValueFactory(new PropertyValueFactory<employees, Integer>("id"));
-        col_salary.setCellValueFactory(new PropertyValueFactory<employees, Double>("salary"));
 
-        listM = sqlConnect.getEmp();
-        table_emp.setItems(listM);
+
+    public void uploadData() throws IOException {
+
+        URL url = new URL("https://app.startinfinity.com/api/v2/workspaces/37126/boards/8VRsWMC8xa7/items");
+        HttpURLConnection http = (HttpURLConnection)url.openConnection();
+        http.setRequestMethod("POST");
+        http.setDoOutput(true);
+        http.setRequestProperty("Accept", "application/json");
+        http.setRequestProperty("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiODYxMmYzY2M1NGE0MjcyZGViYTViMDJiMDIzNjRhYTgzZDQxNzAyODI3NjIwNjY2NmUzODVmNDc1MjI5NDBiMzRlZTg5NDk0MzJhNmE4YTciLCJpYXQiOjE2NzAyMjI4MjcuMzg4NTE3LCJuYmYiOjE2NzAyMjI4MjcuMzg4NTIxLCJleHAiOjE3MDE3NTg4MjcuMzg0ODk0LCJzdWIiOiIxMTc0OTciLCJzY29wZXMiOlsicHVibGljLWFwaSJdfQ.jEED0T-VRpYUVEtYQgWOyhp3YDqySaMjSsqk1GCp3uWXr7YDN6j9DA-05XfM0nxZNPdBCyJKzHHKsazMiv9tcXFY1o4IJWh-ynaRlWvEbEEHTOVAIJFCNh4KfmO2ay2DjQFFBCYBa2TD1Ag0EKJn6aZ_J0kVm6-6wTXw5DG51DLRNcYJG7Vgya0xTDnj-Emw1csxqTI5hK9YJw9CX6pP0a4JFcTEv76KZi3K_OupJ04YdUXkbLT2uCTaelNB1EbGWdUR58yY7EcaHJDa99GvDjLtd8sgLw0dKLfo-YYWmpY_NQP80UQ5-ciNz3T9USpw55lazw5lap5xsSynVxVi3jPLJKpxpYT4U3tU_hYw8pmjqYA9XjnHdM7UC7jCaoy7AqlmCWBH7T-aDf3nNaFEcU44TNUw_pPgPOTSOiYFli_urgd7SuAbmu5xvtTtM9L_SSw3L7k7Uc_nFhRVy03MikN9mE13Q8J3GFVFnvsZSBOdkY8UWowPrdFaGH5zfRXsKNzxgWExP0dn94198O2vSEC9R702N5vjuDorGR5nw6uQjjnzlPaDp0FkZNZSTL2OBTlqmklJ5Ims5NnY416UHNrXsDh08dvyyd7GrQADHiKt0JXx2WSZxHaKGpQvVyGOTe_CGbX8K9HAZj9klTLtsaker1CctHUMfuIBkE6SPUs");
+        http.setRequestProperty("Content-Type", "application/json");
+
+
+
+        String data = "{\n  " +
+                "\"folder_id\": \"ic9QWARe2Ew\",\n  " +
+                "\"values\": [\n" +
+                "{\n" +
+                //                          salesID1
+                "\"attribute_id\": \"f56d1992-66cb-4c8f-85a3-ed6347590fe7\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesID1()+
+                "\"\n" +
+                "},\n" +
+                "{\n" +
+                //                          orderAccount
+                "\"attribute_id\": \"a0d42b94-5856-41ff-b907-43b15ad01103\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getOrderAccount() +
+                "\"\n" +
+                "},\n" +
+                "{\n" +
+                //                          zipcode
+                "\"attribute_id\": \"89c221a3-517e-4050-88b3-59a8b79477c6\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getZipcode() +
+                "\"\n" +
+                "},\n" +
+                "{\n" +
+                //                          street
+                "\"attribute_id\": \"2286b774-a0f9-4923-bb63-7a9ce689b440\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getStreet() +
+                "\"\n" +
+                "},\n" +
+                "{\n" +
+                //                          mbp_phone2
+                "\"attribute_id\": \"5b0e6aa4-5d2f-4f55-9262-9a043542731f\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getMbp_phone2() +
+                "},\n" +
+                "{\n" +
+                //                          mbp_phone1
+                "\"attribute_id\": \"08248cbd-4ac4-478b-97c0-07709aff6f16\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getMbp_phone1() +
+                "},\n" +
+                "{\n" +
+                //                          mbp_internalSono
+                "\"attribute_id\": \"999c5246-5054-43b9-be27-50b089e2c7df\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getMbp_internalSono() +
+                "},\n" +
+                "{\n" +
+                //                          mbp_contactPerson2
+                "\"attribute_id\": \"f66aa2b4-8164-49bb-b44e-ba696b7b73d3\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getMbp_contactPerson2() +
+                "},\n" +
+                "{\n" +
+                //                          mbp_contactPerson1
+                "\"attribute_id\": \"50a54c78-b9b8-4528-b668-120696cf8ce4\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getMbp_contactPerson1() +
+                "},\n" +
+                "{\n" +
+                //                          location
+                "\"attribute_id\": \"64d31d00-9e50-440c-94a3-780bea14c7ca\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getLocation() +
+                "},\n" +
+                "{\n" +
+                //                          deliveryPostalAddress
+                "\"attribute_id\": \"e8c6b9f9-2d35-49e7-bc63-1c40824d09a2\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDeliveryPostalAddress() +
+                "},\n" +
+                "{\n" +
+                //                          dataAreaID1
+                "\"attribute_id\": \"1b412600-5fa8-47c3-abd3-7202b619e153\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDataAreaID1() +
+                "},\n" +
+                "{\n" +
+                //                          countryRegionID
+                "\"attribute_id\": \"7f5ba69b-5a65-46c2-957b-a4a84a360935\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getCountryRegionID() +
+                "},\n" +
+                "{\n" +
+                //                          city
+                "\"attribute_id\": \"03222094-5c24-4171-9e34-5375074d35a3\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getCity() +
+                "},\n" +
+                "{\n" +
+                //                          address
+                "\"attribute_id\": \"42291ba5-d39e-40b4-a71f-5a6a97bf720b\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getAddress() +
+                "},\n" +
+                "{\n" +
+                //                          dimension5
+                "\"attribute_id\": \"4ebf33aa-c3ed-4f82-b101-207b77cfc3f6\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDimension5_() +
+                "},\n" +
+                "{\n" +
+                //                          dimension4
+                "\"attribute_id\": \"3b5ed018-1048-434c-8b00-34a18ed0db37\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDimension4_() +
+                "},\n" +
+                "{\n" +
+                //                          dimension3
+                "\"attribute_id\": \"5387eba3-06b6-4a7a-bc78-c2c332c2f5eb\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDimension3_() +
+                "},\n" +
+                "{\n" +
+                //                          dimension2
+                "\"attribute_id\": \"c57f6aec-0f19-43e2-92de-d26b4f22a361\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDimension2_() +
+                "},\n" +
+                "{\n" +
+                //                          dimension1
+                "\"attribute_id\": \"9564a18f-be14-4ffd-8800-b650c3fa4f89\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDimension() +
+                "},\n" +
+                "{\n" +
+                //                          inventLocationID
+                "\"attribute_id\": \"2b677cfb-d14a-42c9-956f-915aac8b30ba\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getInventLocationID() +
+                "},\n" +
+                "{\n" +
+                //                          valueMST
+                "\"attribute_id\": \"38d51cd6-889d-495e-af06-a978252655fb\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getValueMST() +
+                "},\n" +
+                "{\n" +
+                //                          transRecID
+                "\"attribute_id\": \"3519f0ec-7dd5-490b-ac55-92c09f8324bc\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getTransRecID() +
+                "},\n" +
+                "{\n" +
+                //                          origSalesID
+                "\"attribute_id\": \"93af02fa-4e9e-4708-bfcd-d34404521528\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getOrigSalesID() +
+                "},\n" +
+                "{\n" +
+                //                          salesUnit
+                "\"attribute_id\": \"09292702-7c4b-4ad9-aa30-abf311b88c92\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesUnit() +
+                "},\n" +
+                "{\n" +
+                //                          salesID
+                "\"attribute_id\": \"1acfbc80-45e4-4272-9214-a5da164af364\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesID() +
+                "},\n" +
+                "{\n" +
+                //                          packingSlipID
+                "\"attribute_id\": \"e76ed39e-227b-4ab5-b4f8-0a9ea10cc756\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getPackingSlipID() +
+                "},\n" +
+                "{\n" +
+                //                          itemID
+                "\"attribute_id\": \"2903b310-bda8-4e52-bb3c-409db8ff2d40\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getItemID() +
+                "},\n" +
+                "{\n" +
+                //                          inventDIMID
+                "\"attribute_id\": \"c2162dc6-6f52-4dce-96ab-9723f0102043\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getInventdimid() +
+                "},\n" +
+                "{\n" +
+                //                          inventBatchID
+                "\"attribute_id\": \"f873ba38-82e3-4bf8-bc19-a8fa5c91a9eb\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getInventBatchID() +
+                "},\n" +
+                "{\n" +
+                //                          deliveryDate
+                "\"attribute_id\": \"19cfa8ee-2f73-43d1-a667-a35a652a7ea6\",\n" +
+                "\"data\": \"" +
+                modifyDateAndTime(listM.get(index).getDeliveryDate()) +
+                "},\n" +
+                "{\n" +
+                //                          configID
+                "\"attribute_id\": \"24195f92-3259-4d9b-9bd0-1286ba36ba56\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getConfigID() +
+                "},\n" +
+                "{\n" +
+                //                          partition#2
+                "\"attribute_id\": \"8796bf6a-28ed-4b4e-ba45-8332e537f669\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getPartition2() +
+                "},\n" +
+                "{\n" +
+                //                          dataAreaID#2
+                "\"attribute_id\": \"3fb9a4bd-5003-4612-be93-7bf8036454f9\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDataAreaID2() +
+                "},\n" +
+                "{\n" +
+                //                          recID
+                "\"attribute_id\": \"9cf56ba9-4560-41f0-8422-3c0857294255\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getRecID() +
+                "},\n" +
+                "{\n" +
+                //                          partition
+                "\"attribute_id\": \"581a1da3-6786-47ff-9563-5ff4c96361ca\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getPartition() +
+                "},\n" +
+                "{\n" +
+                //                          dataAreaID
+                "\"attribute_id\": \"41463f0d-15e5-44b5-9689-6756e78f9de7\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDataAreaID() +
+                "},\n" +
+                "{\n" +
+                //                          defaultDimension
+                "\"attribute_id\": \"c71f595a-898f-44fb-8f7b-be344a39b42d\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getDefaultDimension() +
+                "},\n" +
+                "{\n" +
+                //                          PURCHORDERFORMNUM
+                "\"attribute_id\": \"8529d576-efd5-4bc7-8dab-82938aa8f6fe\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getPurchOrderFormNum() +
+                "},\n" +
+                "{\n" +
+                //                          custGroup
+                "\"attribute_id\": \"f84d8b82-9a35-431f-9e62-1bb3cb8d8308\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getCustGroup() +
+                "},\n" +
+                "{\n" +
+                //                          salesType
+                "\"attribute_id\": \"a2388687-0019-412c-a8b2-32fd033f8d46\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesType() +
+                "},\n" +
+                "{\n" +
+                //                          createDate1
+                "\"attribute_id\": \"7714455c-9bc8-42bd-bada-4217a9631320\",\n" +
+                "\"data\": \"" +
+                modifyDateAndTime(listM.get(index).getCreatedDateTime1()) +
+                "},\n" +
+                "{\n" +
+                //                          salesGroup
+                "\"attribute_id\": \"739fca10-82e7-4fc4-ab83-37f4b958771e\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesGroup() +
+                "},\n" +
+                "{\n" +
+                //                          qty
+                "\"attribute_id\": \"f23b9f77-d1e3-4001-ba4e-ee8f589f5de6\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getQty() +
+                "},\n" +
+                "{\n" +
+                //                          custAccount
+                "\"attribute_id\": \"c04f50f9-7886-4f97-a8ea-b10afda653e8\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getCustAccount() +
+                "},\n" +
+                "{\n" +
+                //                          salesName
+                "\"attribute_id\": \"e4ab973a-ac56-4a33-b5cd-3208037e13d9\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getSalesName() +
+                "}\n" +
+                "]\n}";
+
+        byte[] out = data.getBytes(StandardCharsets.UTF_8);
+
+        OutputStream stream = http.getOutputStream();
+        stream.write(out);
+
+        System.out.println(http.getResponseCode() + " " + http.getResponseMessage());
+        if(http.getResponseCode() == 201)
+            JOptionPane.showMessageDialog(null,"Upload Successfully");
+        else
+            JOptionPane.showMessageDialog(null,"Error !\n" + http.getResponseMessage());
+        http.disconnect();
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        refreshTable();
 
+    // when upload to starfinity website, system will auto add 8 hours to the date
+    // this function is used to auto minus 8 hours
+    static String modifyDateAndTime(String input){
+
+        String newDate = null;
+        String[] ary = input.split(" ");
+        String[] date= ary[0].split("-");
+        String[] time = ary[1].split(":");
+
+        int tempHr = Integer.parseInt(time[0]);
+        int tempDay = Integer.parseInt(date[2]);
+        if(tempHr > 8){
+            tempHr-=8;
+            newDate = date[0] + "-" + date[1] + "-" + date[2] + " " + tempHr + ":" + time[1] + ":" + time[2];
+        }
+        else if(tempHr < 8 && tempHr >= 0){
+            tempHr+=16;
+            tempDay-=1;
+            newDate = date[0] + "-" + date[1] + "-" + tempDay + " " + tempHr + ":" + time[1] + ":" + time[2];
+        }
+
+        return newDate;
     }
 
 
+
+
+
+    //----------------------------------code for changing scene------------------------------------------------------
     private Stage stage;
     private Scene scene;
     private Parent root;
