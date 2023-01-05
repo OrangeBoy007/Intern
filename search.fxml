@@ -1,30 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="503.0" prefWidth="824.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="TryFX.searchController">
+<AnchorPane id="AnchorPane" prefHeight="715.0" prefWidth="997.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="intern.app.intern.searchController">
    <children>
-      <TextField fx:id="input" layoutX="6.0" layoutY="181.0" prefHeight="67.0" prefWidth="446.0">
-         <font>
-            <Font size="31.0" />
-         </font></TextField>
-      <Text layoutX="25.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter employee name" wrappingWidth="409.20416259765625">
-         <font>
-            <Font size="31.0" />
-         </font>
-      </Text>
-      <Button layoutX="544.0" layoutY="160.0" mnemonicParsing="false" onAction="#search" prefHeight="78.0" prefWidth="154.0" text="Check">
-         <font>
-            <Font size="18.0" />
-         </font></Button>
-      <HBox alignment="CENTER" prefHeight="129.0" prefWidth="825.0" style="-fx-background-color: #0D1824;">
+      <TableView fx:id="table_sales" layoutX="3.0" layoutY="411.0" onMouseClicked="#getSelected" prefHeight="279.0" prefWidth="972.0">
+        <columns>
+            <TableColumn fx:id="col_dimension" minWidth="85.0" prefWidth="85.0" text="Dimension" />
+            <TableColumn fx:id="col_dimension2_" minWidth="95.0" prefWidth="95.0" text="Dimension2_" />
+            <TableColumn fx:id="col_dimension3_" minWidth="95.0" prefWidth="95.0" text="Dimension3_" />
+            <TableColumn fx:id="col_dimension4_" minWidth="95.0" prefWidth="95.0" text="Dimension4_" />
+            <TableColumn fx:id="col_dimension5_" minWidth="95.0" prefWidth="95.0" text="Dimension5_" />
+            <TableColumn fx:id="col_address" minWidth="400.0" prefWidth="400.0" text="Address" />
+            <TableColumn fx:id="col_city" minWidth="90.0" prefWidth="90.0" text="City" />
+            <TableColumn fx:id="col_countryRegionID" minWidth="130.0" prefWidth="130.0" text="CountryRegionID" />
+            <TableColumn fx:id="col_createdDateTime1" minWidth="170.0" prefWidth="170.0" text="CreatedDateTime1" />
+          <TableColumn fx:id="col_custAccount" minWidth="110.0" prefWidth="110.0" text="CustAccount" />
+            <TableColumn fx:id="col_custGroup" minWidth="100.0" prefWidth="100.0" text="CustGroup" />
+            <TableColumn fx:id="col_dataAreaID1" minWidth="100.0" prefWidth="100.0" text="DataAreaID1" />
+            <TableColumn fx:id="col_defaultDimension" minWidth="125.0" prefWidth="125.0" text="DefaultDimension" />
+            <TableColumn fx:id="col_deliveryPostalAddress" minWidth="180.0" prefWidth="180.0" text="DeliveryPostalAddress" />
+            <TableColumn fx:id="col_location" minWidth="100.0" prefWidth="100.0" text="Location" />
+            <TableColumn fx:id="col_contactPerson1" minWidth="150.0" prefWidth="150.0" text="MBP_contactPerson1" />
+            <TableColumn fx:id="col_mbp_contactPerson2" minWidth="150.0" prefWidth="150.0" text="MBP_contactPerson2" />
+            <TableColumn fx:id="col_mbp_internalSono" minWidth="150.0" prefWidth="150.0" text="MBP_internalSono" />
+            <TableColumn fx:id="col_mbp_phone1" minWidth="110.0" prefWidth="110.0" text="MBP_phone1" />
+            <TableColumn fx:id="col_mbp_phone2" minWidth="110.0" prefWidth="110.0" text="MBP_phone2" />
+            <TableColumn fx:id="col_purchOrderFormNum" minWidth="150.0" prefWidth="150.0" text="PurchOrderFormNum" />
+            <TableColumn fx:id="col_salesGroup" minWidth="95.0" prefWidth="95.0" text="SalesGroup" />
+            <TableColumn fx:id="col_salesID" minWidth="90.0" prefWidth="90.0" text="SalesID" />
+          <TableColumn fx:id="col_salesName" minWidth="300.0" prefWidth="300.0" text="SalesName" />
+            <TableColumn fx:id="col_salesType" minWidth="80.0" text="SalesType" />
+            <TableColumn fx:id="col_state" minWidth="80.0" text="State" />
+            <TableColumn fx:id="col_street" minWidth="400.0" prefWidth="400.0" text="Street" />
+            <TableColumn fx:id="col_zipcode" minWidth="80.0" text="Zipcode" />
+            <TableColumn fx:id="col_dataAreaID" minWidth="90.0" prefWidth="90.0" text="DataAreaID" />
+            <TableColumn fx:id="col_partition" minWidth="100.0" prefWidth="100.0" text="Partition" />
+            <TableColumn fx:id="col_recID" minWidth="100.0" prefWidth="100.0" text="RecID" />
+            <TableColumn fx:id="col_dataAreaID2" minWidth="90.0" prefWidth="90.0" text="DataAreaID2" />
+            <TableColumn fx:id="col_partition2" minWidth="100.0" prefWidth="100.0" text="Partition2" />
+            <TableColumn fx:id="col_configID" minWidth="90.0" prefWidth="90.0" text="ConfigID" />
+            <TableColumn fx:id="col_deliveryDate" minWidth="170.0" prefWidth="170.0" text="DeliveryDate" />
+            <TableColumn fx:id="col_inventBatchID" minWidth="105.0" prefWidth="105.0" text="InventBatchID" />
+            <TableColumn fx:id="col_dimid" minWidth="120.0" prefWidth="120.0" text="inventDimid" />
+            <TableColumn fx:id="col_inventLocationID" minWidth="130.0" prefWidth="130.0" text="InventLocationID" />
+            <TableColumn fx:id="col_itemID" minWidth="130.0" prefWidth="130.0" text="ItemID" />
+            <TableColumn fx:id="col_orderAccount" minWidth="100.0" prefWidth="100.0" text="OrderAccount" />
+            <TableColumn fx:id="col_origSalesID" minWidth="100.0" prefWidth="100.0" text="OrigSalesID" />
+            <TableColumn fx:id="col_packingSlipID" minWidth="110.0" prefWidth="110.0" text="PackingSlipID" />
+            <TableColumn fx:id="col_qty" minWidth="90.0" prefWidth="90.0" text="Qty" />
+            <TableColumn fx:id="col_salesID1" minWidth="100.0" prefWidth="100.0" text="SalesID1" />
+            <TableColumn fx:id="col_salesUnit" minWidth="90.0" prefWidth="90.0" text="SalesUnit" />
+            <TableColumn fx:id="col_transRecID" minWidth="110.0" prefWidth="110.0" text="TransRecID" />
+            <TableColumn fx:id="col_valueMST" minWidth="90.0" prefWidth="90.0" text="ValueMST" />
+        </columns>
+      </TableView>
+      <HBox alignment="CENTER" prefHeight="168.0" prefWidth="934.0" style="-fx-background-color: #0D1824;">
          <children>
             <Button mnemonicParsing="false" onAction="#switchToHome" prefHeight="134.0" prefWidth="155.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 2px;" text="Home" textFill="WHITE">
                <font>
@@ -53,22 +92,51 @@
             </Button>
          </children>
       </HBox>
-      <Text fx:id="name" layoutX="378.0" layoutY="368.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      <Button layoutX="668.0" layoutY="331.0" mnemonicParsing="false" onAction="#uploadData" prefHeight="36.0" prefWidth="246.0" style="-fx-background-color: #0D1824; -fx-border-color: white; -fx-border-width: 2px;" text="Upload" textFill="#2db2df">
          <font>
             <Font size="31.0" />
          </font>
-      </Text>
-      <Text fx:id="id" layoutX="384.0" layoutY="415.0" strokeType="OUTSIDE" strokeWidth="0.0">
+      </Button>
+      <DatePicker fx:id="startDate" layoutX="39.0" layoutY="247.0" prefHeight="61.0" prefWidth="208.0" promptText="Start date" />
+      <Button layoutX="717.0" layoutY="181.0" mnemonicParsing="false" onAction="#search" prefHeight="62.0" prefWidth="149.0" text="Search">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Button>
+      <DatePicker fx:id="endDate" layoutX="385.0" layoutY="247.0" prefHeight="61.0" prefWidth="208.0" promptText="End date" />
+      <Spinner fx:id="hour1" layoutX="39.0" layoutY="334.0" prefHeight="43.0" prefWidth="90.0" />
+      <Spinner fx:id="minute1" layoutX="156.0" layoutY="334.0" prefHeight="43.0" prefWidth="90.0" />
+      <Label layoutX="139.0" layoutY="332.0" text=":">
          <font>
             <Font size="31.0" />
          </font>
-      </Text>
-      <TableView fx:id="table_emp" layoutX="6.0" layoutY="255.0" prefHeight="242.0" prefWidth="818.0">
-        <columns>
-          <TableColumn fx:id="col_name" prefWidth="322.3999695777893" text="Name" />
-          <TableColumn fx:id="col_id" prefWidth="231.99996948242188" text="ID" />
-            <TableColumn fx:id="col_salary" prefWidth="264.800048828125" text="Salary" />
-        </columns>
-      </TableView>
+      </Label>
+      <Spinner fx:id="hour2" layoutX="385.0" layoutY="334.0" prefHeight="43.0" prefWidth="90.0" />
+      <Spinner fx:id="minute2" layoutX="502.0" layoutY="334.0" prefHeight="43.0" prefWidth="90.0" />
+      <Label layoutX="485.0" layoutY="332.0" text=":">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="299.0" layoutY="285.0" text="to">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" layoutX="33.0" layoutY="189.0" prefHeight="46.0" prefWidth="618.0" style="-fx-background-color: black;" text="Select the range of date and time(24hour)" textFill="#3cc23c">
+         <font>
+            <Font size="31.0" />
+         </font>
+      </Label>
+      <Label layoutX="645.0" layoutY="265.0" text="Total records :">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
+      <Label fx:id="records" layoutX="845.0" layoutY="265.0" text="0">
+         <font>
+            <Font size="27.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
