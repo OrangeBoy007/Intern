@@ -25,6 +25,8 @@ import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 public class searchController implements Initializable {
@@ -311,60 +313,61 @@ public class searchController implements Initializable {
             pst.execute();
 
             rs = pst.executeQuery();
-            
+
+
+
             while(rs.next()){
                 salesTable table = new salesTable();
 
-                table.setDimension(rs.getString("dimension"));
-                table.setDimension2_(rs.getString("dimension2_"));
-                table.setDimension3_(rs.getString("dimension3_"));
-                table.setDimension4_(rs.getString("dimension4_"));
-                table.setDimension5_(rs.getString("dimension5_"));
-                table.setAddress(rs.getString("address").replaceAll("\n", " "));
-                table.setCity(rs.getString("city"));
-                table.setCountryRegionID(rs.getString("countryRegionID"));
-                table.setCreatedDateTime1(rs.getString("createdDateTime1"));
-                table.setCustAccount(rs.getString("custAccount"));
-                table.setCustGroup(rs.getString("custGroup"));
-                table.setDataAreaID1(rs.getString("dataAreaID1"));
-                table.setDefaultDimension(rs.getString("defaultDimension"));
-                table.setDeliveryPostalAddress(rs.getString("deliveryPostalAddress"));
-                table.setLocation(rs.getString("location"));
-                table.setMbp_contactPerson1(rs.getString("mbp_contactPerson1"));
-                table.setMbp_contactPerson2(rs.getString("mbp_contactPerson2"));
-                table.setMbp_internalSono(rs.getString("mbp_internalSono"));
-                table.setMbp_phone1(rs.getString("mbp_phone1"));
-                table.setMbp_phone2(rs.getString("mbp_phone2"));
-                table.setPurchOrderFormNum(rs.getString("purchOrderFormNum"));
-                table.setSalesGroup(rs.getString("salesGroup"));
-                table.setSalesID(rs.getString("salesID"));
-                table.setSalesName(rs.getString("salesName"));
-                table.setSalesType(rs.getInt("salesType"));
-                table.setState(rs.getString("state"));
-                table.setStreet(rs.getString("street").replaceAll("\n", " "));
-                table.setZipcode(rs.getString("zipcode"));
-                table.setDataAreaID(rs.getString("dataAreaID"));
-                table.setPartition(rs.getString("partition"));
-                table.setRecID(rs.getString("recID"));
-                table.setDataAreaID2(rs.getString("dataAreaID#2"));
-                table.setPartition2(rs.getString("partition#2"));
-                table.setConfigID(rs.getString("configID"));
-                table.setDeliveryDate(rs.getString("deliveryDate"));
-                table.setInventBatchID(rs.getString("inventBatchID"));
-                table.setInventdimid(rs.getString("inventDIMID"));
-                table.setInventLocationID(rs.getString("inventLocationID"));
-                table.setItemID(rs.getString("itemID"));
-                table.setOrderAccount(rs.getString("orderAccount"));
-                table.setOrigSalesID(rs.getString("origSalesID"));
-                table.setPackingSlipID(rs.getString("packingSLipID"));
-                table.setQty(rs.getDouble("qty"));
-                table.setSalesID1(rs.getString("salesID1"));
-                table.setSalesUnit(rs.getString("salesUnit"));
-                table.setTransRecID(rs.getString("transRecID"));
-                table.setValueMST(rs.getDouble("valueMST"));
+                table.setDimension(checkNull(rs.getString("dimension")));
+                table.setDimension2_(checkNull(rs.getString("dimension2_")));
+                table.setDimension3_(checkNull(rs.getString("dimension3_")));
+                table.setDimension4_(checkNull(rs.getString("dimension4_")));
+                table.setDimension5_(checkNull(rs.getString("dimension5_")));
+                table.setAddress(checkNull(rs.getString("address").replaceAll("\n", " ")));
+                table.setCity(checkNull(rs.getString("city")));
+                table.setCountryRegionID(checkNull(rs.getString("countryRegionID")));
+                table.setCreatedDateTime1(checkNull(rs.getString("createdDateTime1")));
+                table.setCustAccount(checkNull(rs.getString("custAccount")));
+                table.setCustGroup(checkNull(rs.getString("custGroup")));
+                table.setDataAreaID1(checkNull(rs.getString("dataAreaID1")));
+                table.setDefaultDimension(checkNull(rs.getString("defaultDimension")));
+                table.setDeliveryPostalAddress(checkNull(rs.getString("deliveryPostalAddress")));
+                table.setLocation(checkNull(rs.getString("location")));
+                table.setMbp_contactPerson1(checkNull(rs.getString("mbp_contactPerson1")));
+                table.setMbp_contactPerson2(checkNull(rs.getString("mbp_contactPerson2")));
+                table.setMbp_internalSono(checkNull(rs.getString("mbp_internalSono")));
+                table.setMbp_phone1(checkNull(rs.getString("mbp_phone1")));
+                table.setMbp_phone2(checkNull(rs.getString("mbp_phone2")));
+                table.setPurchOrderFormNum(checkNull(rs.getString("purchOrderFormNum")));
+                table.setSalesGroup(checkNull(rs.getString("salesGroup")));
+                table.setSalesID(checkNull(rs.getString("salesID")));
+                table.setSalesName(checkNull(rs.getString("salesName")));
+                table.setSalesType(checkNull(rs.getString("salesType")));
+                table.setState(checkNull(rs.getString("state")));
+                table.setStreet(checkNull(rs.getString("street").replaceAll("\n", " ")));
+                table.setZipcode(checkNull(rs.getString("zipcode")));
+                table.setDataAreaID(checkNull(rs.getString("dataAreaID")));
+                table.setPartition(checkNull(rs.getString("partition")));
+                table.setRecID(checkNull(rs.getString("recID")));
+                table.setDataAreaID2(checkNull(rs.getString("dataAreaID#2")));
+                table.setPartition2(checkNull(rs.getString("partition#2")));
+                table.setConfigID(checkNull(rs.getString("configID")));
+                table.setDeliveryDate(checkNull(rs.getString("deliveryDate")));
+                table.setInventBatchID(checkNull(rs.getString("inventBatchID")));
+                table.setInventdimid(checkNull(rs.getString("inventDIMID")));
+                table.setInventLocationID(checkNull(rs.getString("inventLocationID")));
+                table.setItemID(checkNull(rs.getString("itemID")));
+                table.setOrderAccount(checkNull(rs.getString("orderAccount")));
+                table.setOrigSalesID(checkNull(rs.getString("origSalesID")));
+                table.setPackingSlipID(checkNull(rs.getString("packingSLipID")));
+                table.setQty(checkNull(rs.getString("qty")));
+                table.setSalesID1(checkNull(rs.getString("salesID1")));
+                table.setSalesUnit(checkNull(rs.getString("salesUnit")));
+                table.setTransRecID(checkNull(rs.getString("transRecID")));
+                table.setValueMST(checkNull(rs.getString("valueMST")));
 
                 list.add(table);
-
 
             }
 
@@ -443,7 +446,6 @@ public class searchController implements Initializable {
 
 
 
-
     public void uploadData() throws IOException {
 
         URL url = new URL("https://app.startinfinity.com/api/v2/workspaces/37126/boards/8VRsWMC8xa7/items");
@@ -453,7 +455,6 @@ public class searchController implements Initializable {
         http.setRequestProperty("Accept", "application/json");
         http.setRequestProperty("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiODYxMmYzY2M1NGE0MjcyZGViYTViMDJiMDIzNjRhYTgzZDQxNzAyODI3NjIwNjY2NmUzODVmNDc1MjI5NDBiMzRlZTg5NDk0MzJhNmE4YTciLCJpYXQiOjE2NzAyMjI4MjcuMzg4NTE3LCJuYmYiOjE2NzAyMjI4MjcuMzg4NTIxLCJleHAiOjE3MDE3NTg4MjcuMzg0ODk0LCJzdWIiOiIxMTc0OTciLCJzY29wZXMiOlsicHVibGljLWFwaSJdfQ.jEED0T-VRpYUVEtYQgWOyhp3YDqySaMjSsqk1GCp3uWXr7YDN6j9DA-05XfM0nxZNPdBCyJKzHHKsazMiv9tcXFY1o4IJWh-ynaRlWvEbEEHTOVAIJFCNh4KfmO2ay2DjQFFBCYBa2TD1Ag0EKJn6aZ_J0kVm6-6wTXw5DG51DLRNcYJG7Vgya0xTDnj-Emw1csxqTI5hK9YJw9CX6pP0a4JFcTEv76KZi3K_OupJ04YdUXkbLT2uCTaelNB1EbGWdUR58yY7EcaHJDa99GvDjLtd8sgLw0dKLfo-YYWmpY_NQP80UQ5-ciNz3T9USpw55lazw5lap5xsSynVxVi3jPLJKpxpYT4U3tU_hYw8pmjqYA9XjnHdM7UC7jCaoy7AqlmCWBH7T-aDf3nNaFEcU44TNUw_pPgPOTSOiYFli_urgd7SuAbmu5xvtTtM9L_SSw3L7k7Uc_nFhRVy03MikN9mE13Q8J3GFVFnvsZSBOdkY8UWowPrdFaGH5zfRXsKNzxgWExP0dn94198O2vSEC9R702N5vjuDorGR5nw6uQjjnzlPaDp0FkZNZSTL2OBTlqmklJ5Ims5NnY416UHNrXsDh08dvyyd7GrQADHiKt0JXx2WSZxHaKGpQvVyGOTe_CGbX8K9HAZj9klTLtsaker1CctHUMfuIBkE6SPUs");
         http.setRequestProperty("Content-Type", "application/json");
-
 
 
         String data = "{\n  " +
@@ -481,6 +482,13 @@ public class searchController implements Initializable {
                 "\"\n" +
                 "},\n" +
                 "{\n" +
+                //                          state
+                "\"attribute_id\": \"d5bc61d7-e2ec-4da9-b72a-a1ebfa2c39e8\",\n" +
+                "\"data\": \"" +
+                listM.get(index).getState() +
+                "\"\n" +
+                "},\n" +
+                "{\n" +
                 //                          street
                 "\"attribute_id\": \"2286b774-a0f9-4923-bb63-7a9ce689b440\",\n" +
                 "\"data\": \"" +
@@ -492,252 +500,294 @@ public class searchController implements Initializable {
                 "\"attribute_id\": \"5b0e6aa4-5d2f-4f55-9262-9a043542731f\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getMbp_phone2() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          mbp_phone1
                 "\"attribute_id\": \"08248cbd-4ac4-478b-97c0-07709aff6f16\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getMbp_phone1() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          mbp_internalSono
                 "\"attribute_id\": \"999c5246-5054-43b9-be27-50b089e2c7df\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getMbp_internalSono() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          mbp_contactPerson2
                 "\"attribute_id\": \"f66aa2b4-8164-49bb-b44e-ba696b7b73d3\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getMbp_contactPerson2() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          mbp_contactPerson1
                 "\"attribute_id\": \"50a54c78-b9b8-4528-b668-120696cf8ce4\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getMbp_contactPerson1() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          location
                 "\"attribute_id\": \"64d31d00-9e50-440c-94a3-780bea14c7ca\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getLocation() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          deliveryPostalAddress
                 "\"attribute_id\": \"e8c6b9f9-2d35-49e7-bc63-1c40824d09a2\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDeliveryPostalAddress() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dataAreaID1
                 "\"attribute_id\": \"1b412600-5fa8-47c3-abd3-7202b619e153\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDataAreaID1() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          countryRegionID
                 "\"attribute_id\": \"7f5ba69b-5a65-46c2-957b-a4a84a360935\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getCountryRegionID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          city
                 "\"attribute_id\": \"03222094-5c24-4171-9e34-5375074d35a3\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getCity() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          address
-                "\"attribute_id\": \"42291ba5-d39e-40b4-a71f-5a6a97bf720b\",\n" +
+                "\"attribute_id\": \"dbaa88b8-67a1-43a7-84ad-d1e2053ee519\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getAddress() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dimension5
                 "\"attribute_id\": \"4ebf33aa-c3ed-4f82-b101-207b77cfc3f6\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDimension5_() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dimension4
                 "\"attribute_id\": \"3b5ed018-1048-434c-8b00-34a18ed0db37\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDimension4_() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dimension3
                 "\"attribute_id\": \"5387eba3-06b6-4a7a-bc78-c2c332c2f5eb\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDimension3_() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dimension2
                 "\"attribute_id\": \"c57f6aec-0f19-43e2-92de-d26b4f22a361\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDimension2_() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dimension1
                 "\"attribute_id\": \"9564a18f-be14-4ffd-8800-b650c3fa4f89\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDimension() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          inventLocationID
                 "\"attribute_id\": \"2b677cfb-d14a-42c9-956f-915aac8b30ba\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getInventLocationID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          valueMST
                 "\"attribute_id\": \"38d51cd6-889d-495e-af06-a978252655fb\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getValueMST() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          transRecID
                 "\"attribute_id\": \"3519f0ec-7dd5-490b-ac55-92c09f8324bc\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getTransRecID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          origSalesID
                 "\"attribute_id\": \"93af02fa-4e9e-4708-bfcd-d34404521528\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getOrigSalesID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          salesUnit
                 "\"attribute_id\": \"09292702-7c4b-4ad9-aa30-abf311b88c92\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getSalesUnit() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          salesID
                 "\"attribute_id\": \"1acfbc80-45e4-4272-9214-a5da164af364\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getSalesID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          packingSlipID
                 "\"attribute_id\": \"e76ed39e-227b-4ab5-b4f8-0a9ea10cc756\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getPackingSlipID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          itemID
                 "\"attribute_id\": \"2903b310-bda8-4e52-bb3c-409db8ff2d40\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getItemID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          inventDIMID
                 "\"attribute_id\": \"c2162dc6-6f52-4dce-96ab-9723f0102043\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getInventdimid() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          inventBatchID
                 "\"attribute_id\": \"f873ba38-82e3-4bf8-bc19-a8fa5c91a9eb\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getInventBatchID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          deliveryDate
                 "\"attribute_id\": \"19cfa8ee-2f73-43d1-a667-a35a652a7ea6\",\n" +
                 "\"data\": \"" +
                 modifyDateAndTime(listM.get(index).getDeliveryDate()) +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          configID
                 "\"attribute_id\": \"24195f92-3259-4d9b-9bd0-1286ba36ba56\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getConfigID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          partition#2
                 "\"attribute_id\": \"8796bf6a-28ed-4b4e-ba45-8332e537f669\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getPartition2() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dataAreaID#2
                 "\"attribute_id\": \"3fb9a4bd-5003-4612-be93-7bf8036454f9\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDataAreaID2() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          recID
                 "\"attribute_id\": \"9cf56ba9-4560-41f0-8422-3c0857294255\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getRecID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          partition
                 "\"attribute_id\": \"581a1da3-6786-47ff-9563-5ff4c96361ca\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getPartition() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          dataAreaID
                 "\"attribute_id\": \"41463f0d-15e5-44b5-9689-6756e78f9de7\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDataAreaID() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          defaultDimension
                 "\"attribute_id\": \"c71f595a-898f-44fb-8f7b-be344a39b42d\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getDefaultDimension() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          PURCHORDERFORMNUM
                 "\"attribute_id\": \"8529d576-efd5-4bc7-8dab-82938aa8f6fe\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getPurchOrderFormNum() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          custGroup
                 "\"attribute_id\": \"f84d8b82-9a35-431f-9e62-1bb3cb8d8308\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getCustGroup() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          salesType
                 "\"attribute_id\": \"a2388687-0019-412c-a8b2-32fd033f8d46\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getSalesType() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          createDate1
                 "\"attribute_id\": \"7714455c-9bc8-42bd-bada-4217a9631320\",\n" +
                 "\"data\": \"" +
                 modifyDateAndTime(listM.get(index).getCreatedDateTime1()) +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          salesGroup
                 "\"attribute_id\": \"739fca10-82e7-4fc4-ab83-37f4b958771e\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getSalesGroup() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          qty
                 "\"attribute_id\": \"f23b9f77-d1e3-4001-ba4e-ee8f589f5de6\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getQty() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          custAccount
                 "\"attribute_id\": \"c04f50f9-7886-4f97-a8ea-b10afda653e8\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getCustAccount() +
+                "\"\n" +
                 "},\n" +
                 "{\n" +
                 //                          salesName
                 "\"attribute_id\": \"e4ab973a-ac56-4a33-b5cd-3208037e13d9\",\n" +
                 "\"data\": \"" +
                 listM.get(index).getSalesName() +
+                "\"\n" +
                 "}\n" +
                 "]\n}";
 
@@ -779,6 +829,15 @@ public class searchController implements Initializable {
         return newDate;
     }
 
+    static String checkNull(String temp){
+
+        if(temp.isEmpty()) {
+            return "null";
+        }
+
+        else
+            return temp;
+    }
 
 
 
